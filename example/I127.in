@@ -1,0 +1,14 @@
+d             ! create densities
+I127          ! output name
+jj55          ! orbit information (jj55pn.sps)
+3 -8          ! # of valence protons, neutrons
+5             ! 2 * jz(spin of nucleus)
+0             ! both parities wanted
+800          ! Enter desired limit on fragment size for breaking Lanczos vectors (0=default)
+upn
+sn100pnMod    ! interaction file name (jj55pna.int, sn100.int, sn100pn.int)
+1 102 127 0.3 ! scaling
+1 1 1 1 1
+end           ! end of reading in Hamiltonian files
+ld            ! 'exact' or full diagonalization by Householder rather than Lanczos
+6 380         ! 1 states kept (max # iterations for lanczos)
