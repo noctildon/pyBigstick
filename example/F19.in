@@ -3,6 +3,7 @@ f19           ! output name
 sd            ! orbit information (sd.sps)
 1 2           ! # of valence protons, neutrons (compare to O16)
 1             ! 2 * jz(spin of nucleus)
+0             ! both parities wanted
 usdb          ! interaction file name (usdb.int)
 1 18. 19. 0.3 ! scaling, 1 for single particle energy, 18 for core mass number+2, 19 for target mass (p.44 in document)
 end           ! end of reading in Hamiltonian files

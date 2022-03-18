@@ -3,6 +3,7 @@ ge72          ! output name
 pf            ! orbit information (pf.sps)
 -8 20         ! # of valence protons, neutrons
 0             ! 2 * jz(spin of nucleus)
+0             ! both parities wanted
 GXPF1         ! interaction file name (GXPF1.int)
 1 42. 72. 0.3 ! scaling, 1 for single particle energy, 42 for core mass number+2, 72 for target mass (p.44 in document)
 end           ! end of reading in Hamiltonian files
