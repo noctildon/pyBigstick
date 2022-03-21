@@ -2,6 +2,7 @@ import os
 import re
 import pandas as pd
 from pyBigstick.orbits import df_orbits
+import numpy as np
 
 nuclear_data = pd.read_json('pyBigstick/nuclear_data.json')
 
@@ -21,7 +22,7 @@ states_comment = '! number of state, max Lanczos iteration'
 
 
 class Nucleus:
-    def __init__(self, nucl_symbol: str, states=6, diag='ld', maxiter=400, fragsize=-1):
+    def __init__(self, nucl_symbol: str, n_states=6, diag='ld', maxiter=400, fragsize=-1):
         symbol, mass_number = re.split('(\d+)', nucl_symbol)[:2]
 
         try:
@@ -55,13 +56,15 @@ class Nucleus:
         self.int = self.get_interaction()
         self.scaling = f'{1} {2*self.get_core_orbit_capcity()+2} {self.A} {0.3}'
 
-        # number of states, diagonalize algo, max iteration
-        self.states = states
-        self.diag = diag
-        self.maxiter = maxiter
+        self.n_states = n_states # number of states,
+        self.diag = diag # diagonalize algo
+        self.maxiter = maxiter #max iteration
+        self.fragsize = fragsize # for parallel job only, -1 means no parallel
 
-        # for parallel job only, -1 means no parallel
-        self.fragsize = fragsize
+        # results
+        self.states = [] # energy level states: staten, E, Ex, J, T
+        self.densities = [] # density matrices: statei, statej, orba, orbb, Jt, Tt, value
+
 
     # n is nucleon
     def get_valence(self, hole=True):
@@ -144,6 +147,81 @@ class Nucleus:
         if quiet == True:
             commands += f'rm *.bigstick fort.* {self.nucl_symbol}.lcoef;\n'
         os.system(commands)
+
+
+    def get_levels(self):
+        filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.res'
+        with open(filepath, "r") as f:
+            lines = f.readlines()
+            split_lines = [line.split() for line in lines]
+            for line_n ,line in enumerate(split_lines):
+                if 'State' in line and 'Ex' in line:
+                    headings_n = line_n
+                    break
+
+            # the states
+            for i in range(headings_n+1, headings_n+1+self.n_states):
+                state = np.array(split_lines[i])
+                state_n, energy, energy_x, J0, T0 = state
+                self.states.append([int(state_n), float(energy), float(energy_x), float(J0), float(T0)])
+
+        return self.states
+
+    # return ij transition in bigstick format
+    def get_transition_ij(self, statej=2, statei=1):
+        filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.dres'
+        matrix = ''
+        starting_line, ending_line = 0, 0
+        with open(filepath) as f:
+            unsplit_lines = f.readlines()
+            lines = []
+            for line in unsplit_lines:
+                line = line.split()
+                if line and '++++' in line[0]:
+                    line = []
+                lines.append(line)
+
+            for i in range(len(lines)):
+                if 'Initial' in lines[i] and 'state' in lines[i]:
+                    if statei == int(lines[i][3]) and statej == int(lines[i+1][3]):
+                        starting_line = i
+
+            while True:
+                line_pivot = starting_line + ending_line
+                if lines[line_pivot] == []:
+                    break
+                ending_line += 1
+            ending_line = starting_line + ending_line
+
+            for l in range(starting_line, ending_line):
+                matrix += unsplit_lines[l]
+        return matrix
+
+    def get_matrices_ij(self, statej=2, statei=1):
+        matrix = self.get_transition_ij(statej, statei)
+        lines = matrix.split('\n')
+        lines = [line.split() for line in lines]
+
+        for line in lines:
+            if 'Jt' in line:
+                Jt = int(line[2][:-1])
+            if len(line) == 4:
+                orba, orbb, me0, me1 = line
+                self.densities.append([statei, statej, int(orba), int(orbb), Jt, 0, float(me0)])
+                self.densities.append([statei, statej, int(orba), int(orbb), Jt, 1, float(me1)])
+
+        return self.densities
+
+    def save_results(self):
+        # initilize
+        self.states = []
+        self.densities = []
+
+        self.get_levels()
+        for i in range(self.n_states):
+            for j in range(self.n_states):
+                self.get_matrices_ij(j, i)
+
 
 
 if __name__ == "__main__":
