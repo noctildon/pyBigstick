@@ -13,13 +13,13 @@
     6    -18.99335   4.86761     3.500   0.500
   
   
-  Total time to run :    2.9000000096857548E-002
+  Total time to run :    2.7999999932944775E-002
   Time in 2-body (pp)(backwards) :    0.0000000000000000     
   
   -- END OF RUN REPORT -- END OF RUN REPORT -- END OF RUN REPORT -- 
   
   BIGSTICK Version 7.9.12 Mar 2021
-  Run date: 2022-03-18
+  Run date: 2022-03-21
   Menu choice: d  
 
  Number of MPI processors =           1 , with # OpenMP threads =            1

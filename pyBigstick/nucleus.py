@@ -42,19 +42,19 @@ class Nucleus:
         self.n = neutron
 
         # proton and neutron must be in the same orbit
-        self.p_orbit = self.get_orbit(proton)
-        self.n_orbit = self.get_orbit(neutron)
+        self.p_orbit = self.__get_orbit(proton)
+        self.n_orbit = self.__get_orbit(neutron)
         if self.p_orbit != self.n_orbit:
             raise ValueError("Protons and neutrons are in different orbit. Handle them manually.")
         else:
             self.orbit = self.p_orbit
 
         self.jz = 0 if self.A %2 == 0 else 1
-        self.p_valence = self.get_valence()[0]
-        self.n_valence = self.get_valence()[1]
+        self.p_valence = self.__get_valence()[0]
+        self.n_valence = self.__get_valence()[1]
 
-        self.int = self.get_interaction()
-        self.scaling = f'{1} {2*self.get_core_orbit_capcity()+2} {self.A} {0.3}'
+        self.int = self.__get_interaction()
+        self.scaling = f'{1} {2*self.__get_core_orbit_capcity()+2} {self.A} {0.3}'
 
         self.n_states = n_states # number of states,
         self.diag = diag # diagonalize algo
@@ -67,8 +67,8 @@ class Nucleus:
 
 
     # n is nucleon
-    def get_valence(self, hole=True):
-        core_size = self.get_core_orbit_capcity()
+    def __get_valence(self, hole=True):
+        core_size = self.__get_core_orbit_capcity()
         size = df_orbits.loc[df_orbits.name == self.orbit, 'size'].values[0]
         p_valence = self.p - core_size
         n_valence = self.n - core_size
@@ -82,7 +82,7 @@ class Nucleus:
 
         return p_valence, n_valence
 
-    def get_orbit(self, n):
+    def __get_orbit(self, n):
         if n <= 2:
             return 's'
         if 2 < n <= 8:
@@ -96,10 +96,10 @@ class Nucleus:
         else:
             raise ValueError('Too many nucleons')
 
-    def get_core_orbit_capcity(self):
+    def __get_core_orbit_capcity(self):
         return df_orbits.loc[df_orbits.name == self.orbit, 'core_size'].values[0]
 
-    def get_interaction(self):
+    def __get_interaction(self):
         if self.orbit == 's':
             raise ValueError('Interaction not found')
         return df_orbits.loc[df_orbits.name == self.orbit, 'int'].values[0]
@@ -115,14 +115,13 @@ class Nucleus:
         output += f'{parity:20} {parity_comment}'
         if self.fragsize != -1:
             output += f'{str(self.fragsize):20} {fragsize_comment}'
-
         if self.int == 'jj55pna':
             output += 'upn\n'
         output += f'{self.int:20} {hamil_comment}'
         output += f'{self.scaling:20} {scaling_comment}'
         output += f'{end:20} {end_comment}'
         output += f'{self.diag:20} {diag_comment}'
-        output += f'{str(self.states)} {str(self.maxiter):18} {states_comment}'
+        output += f'{str(self.n_states)} {str(self.maxiter):18} {states_comment}'
         return output
 
     # save the script
@@ -149,7 +148,7 @@ class Nucleus:
         os.system(commands)
 
 
-    def get_levels(self):
+    def __get_levels(self):
         filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.res'
         with open(filepath, "r") as f:
             lines = f.readlines()
@@ -168,7 +167,7 @@ class Nucleus:
         return self.states
 
     # return ij transition in bigstick format
-    def get_transition_ij(self, statej=2, statei=1):
+    def __get_transition_ij(self, statej=2, statei=1):
         filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.dres'
         matrix = ''
         starting_line, ending_line = 0, 0
@@ -197,8 +196,8 @@ class Nucleus:
                 matrix += unsplit_lines[l]
         return matrix
 
-    def get_matrices_ij(self, statej=2, statei=1):
-        matrix = self.get_transition_ij(statej, statei)
+    def __get_matrices_ij(self, statej=2, statei=1):
+        matrix = self.__get_transition_ij(statej, statei)
         lines = matrix.split('\n')
         lines = [line.split() for line in lines]
 
@@ -217,11 +216,13 @@ class Nucleus:
         self.states = []
         self.densities = []
 
-        self.get_levels()
+        self.__get_levels()
         for i in range(self.n_states):
             for j in range(self.n_states):
-                self.get_matrices_ij(j, i)
+                self.__get_matrices_ij(j, i)
 
+        self.states = pd.DataFrame(self.states, columns=['state', 'E', 'Ex', 'J', 'T'])
+        self.densities = pd.DataFrame(self.densities, columns=['statei', 'statej', 'orba', 'orbb', 'Jt', 'Tt', 'value'])
 
 
 if __name__ == "__main__":
