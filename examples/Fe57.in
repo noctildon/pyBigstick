@@ -2,7 +2,7 @@ d             ! create densities
 fe54          ! output name
 pf            ! orbit information (pf.sps)
 6 8           ! # of valence protons, neutrons
-0             ! 2 * jz(spin of nucleus)
+1             ! 2 * jz(spin of nucleus)
 0             ! both parities wanted
 800
 GXPF1         ! interaction file name (GXPF1.int)

@@ -1,8 +1,9 @@
+import os
 import re
 import pandas as pd
-from orbits import df_orbits
+from pyBigstick.orbits import df_orbits
 
-nuclear_data = pd.read_json('./nuclear_data.json')
+nuclear_data = pd.read_json('pyBigstick/nuclear_data.json')
 
 # script comments
 option_comment = '! create densities\n'
@@ -35,7 +36,7 @@ class Nucleus:
         self.symbol = symbol
         self.nucl_symbol = nucl_symbol
         self.nucl = nucl
-        self.A = mass_number
+        self.A = int(mass_number)
         self.p = proton
         self.n = neutron
 
@@ -47,7 +48,7 @@ class Nucleus:
         else:
             self.orbit = self.p_orbit
 
-        self.jz = self.get_jz()
+        self.jz = 0 if self.A %2 == 0 else 1
         self.p_valence = self.get_valence()[0]
         self.n_valence = self.get_valence()[1]
 
@@ -62,14 +63,14 @@ class Nucleus:
         # for parallel job only, -1 means no parallel
         self.fragsize = fragsize
 
-    # n is nucleon number
+    # n is nucleon
     def get_valence(self, hole=True):
         core_size = self.get_core_orbit_capcity()
         size = df_orbits.loc[df_orbits.name == self.orbit, 'size'].values[0]
         p_valence = self.p - core_size
         n_valence = self.n - core_size
 
-        # negative valence means hole
+        # negatives mean holes
         if hole == True:
             if p_valence > size/2:
                 p_valence = - (size - p_valence)
@@ -92,12 +93,6 @@ class Nucleus:
         else:
             raise ValueError('Too many nucleons')
 
-    def get_jz(self):
-        if (self.p + self.n)%2 == 0:
-            return 0
-        else:
-            return 1
-
     def get_core_orbit_capcity(self):
         return df_orbits.loc[df_orbits.name == self.orbit, 'core_size'].values[0]
 
@@ -106,7 +101,8 @@ class Nucleus:
             raise ValueError('Interaction not found')
         return df_orbits.loc[df_orbits.name == self.orbit, 'int'].values[0]
 
-    def script(self):
+    # generate the script
+    def script_gen(self):
         option, end, parity = 'd', 'end', '0'
         output = f'{option:20} {option_comment}'
         output += f'{self.nucl_symbol:20} {name_comment}'
@@ -126,11 +122,30 @@ class Nucleus:
         output += f'{str(self.states)} {str(self.maxiter):18} {states_comment}'
         return output
 
+    # save the script
+    def script_save(self):
+        filepath = f'examples/{self.nucl_symbol}/create_wfn.in'
+
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        with open(filepath, "w") as f:
+            f.write(self.script_gen())
+
+    # prepare necessary input files (.sps, .int, etc)
+    def prepare(self):
+        commands = f'cp sps/{self.orbit}.sps examples/{self.nucl_symbol}/;'
+        commands += f'cp ints/{self.int}.int examples/{self.nucl_symbol}/;'
+        os.system(commands)
+
+    def run(self, bs=None, quiet=True):
+        if bs == None:
+            raise ValueError('Must specify BIGSTICK path by bs=/bs/path')
+        commands = f'cd examples/{self.nucl_symbol};'
+        commands += f'{bs} < create_wfn.in &&'
+        if quiet == True:
+            commands += f'rm *.bigstick fort.* {self.nucl_symbol}.lcoef;\n'
+        os.system(commands)
+
 
 if __name__ == "__main__":
     nu = Nucleus('fe57')
-    print('p_valence:', nu.p_valence)
-    print('n_valence:', nu.n_valence)
     print('jz:', nu.jz)
-    print('scaling:',nu.scaling)
-    print('**********')
