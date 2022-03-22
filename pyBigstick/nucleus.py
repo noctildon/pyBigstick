@@ -222,7 +222,10 @@ class Nucleus:
                 self.__get_matrices_ij(j, i)
 
         self.states = pd.DataFrame(self.states, columns=['state', 'E', 'Ex', 'J', 'T'])
+        self.states.index += 1
         self.densities = pd.DataFrame(self.densities, columns=['statei', 'statej', 'orba', 'orbb', 'Jt', 'Tt', 'value'])
+        self.densities['amp'] = self.densities['value'] **2
+
 
 
 if __name__ == "__main__":
