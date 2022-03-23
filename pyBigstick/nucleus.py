@@ -75,9 +75,9 @@ class Nucleus:
 
         # negatives mean holes
         if hole == True:
-            if p_valence > size/2:
+            if p_valence > size/2 and p_valence != size:
                 p_valence = - (size - p_valence)
-            if n_valence > size/2:
+            if n_valence > size/2 and n_valence != size:
                 n_valence = - (size - n_valence)
 
         return p_valence, n_valence
@@ -226,7 +226,10 @@ class Nucleus:
         self.densities = pd.DataFrame(self.densities, columns=['statei', 'statej', 'orba', 'orbb', 'Jt', 'Tt', 'value'])
         self.densities['amp'] = self.densities['value'] **2
 
-
+    # check if calculated
+    def check(self):
+        filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.wfn'
+        return os.path.exists(filepath)
 
 if __name__ == "__main__":
     nu = Nucleus('fe57')

@@ -6,10 +6,10 @@ import plotly.express as px
 from barChartPlotly import plotly_barcharts_3d
 
 
-nu = Nucleus('f19')
-nu.save_results()
+bs = '/home/wei-chih/Desktop/Research/BigstickPublick/v7.9.12/bigstick.x'
 
 header_container = st.container()
+bs_conatiner = st.container()
 states_container = st.container()
 densities_container = st.container()
 
@@ -25,12 +25,35 @@ with header_container:
     st.markdown("""This streamlit app visualizes the nuclear transitions calculated by [pyBigstick](https://github.com/noctildon/pyBigstick),
         including the energy levels and the density matrices.""")
 
+
+with bs_conatiner:
+    st.text_input("The nucleus to calculate, eg. F19, be10, Ge70 (case-insensitive).\
+        Not all of the nucleus is possible to calculate.",
+        key="nucl_name", value='f19')
+    nucl_name = st.session_state.nucl_name
+
+    col1, col2 = st.columns(2)
+    with col1:
+        n_states = st.selectbox('Number of states to calculate (more states always needs more time)', range(1,7), index=2)
+    with col2:
+        maxiter = st.selectbox('Number of iteration (higher iteration is more accurate on results, but takes longer)', np.arange(50,500,10), index=5)
+
+    st.text(f'Calculate {nucl_name}...')
+    nu = Nucleus(nucl_name, n_states=n_states, maxiter=maxiter)
+
+    if not nu.check():
+        nu.script_save()
+        nu.prepare()
+        nu.run(bs=bs)
+
+    nu.save_results()
+
 with states_container:
     st.title('Energy level states')
     st.markdown("""When the scattering happens to a nucleus, the nucleus could be excited to higher state.
         In general, initially the nucleus is in ground state (the state with the lowest energy).
         Then after scattering, it is excited to some higher state with energy higher than ground state.
-        We also label the state with a letter n. Ground state has n=1. First excited state has n=2. Second excited has n=3, and so on.""")
+        We also label the state with n. Ground state has n=1. First excited state has n=2. Second excited has n=3, and so on.""")
 
     fig = px.bar(nu.states, x='state', y='Ex',
         labels={
@@ -70,7 +93,7 @@ with densities_container:
     st.table(filter_densities)
 
     st.subheader('3D plot of the density matrices')
-    st.text('note that the plot only shows non-zero elements.')
+    st.text('The plot only shows non-zero elements.')
 
 
     if not filter_densities.empty:

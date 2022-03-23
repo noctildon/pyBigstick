@@ -1,0 +1,11 @@
+d                    ! create densities
+be10                 ! output file name
+0p                   ! orbit information
+2 -2                 ! # of valence protons, neutrons
+0                    ! 2 * jz
+0                    ! both parities wanted
+pkuo                 ! interaction file name (pkuo.int)
+1 6 10 0.3           ! scaling
+end                  ! end of reading in Hamiltonian files
+ld                   ! diagonalization algorithm
+6 400                ! number of state, max Lanczos iteration
