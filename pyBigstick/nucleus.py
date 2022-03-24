@@ -139,9 +139,10 @@ class Nucleus:
         os.system(commands)
 
     def run(self, bs=None, quiet=True):
+        commands = ''
         if bs == None:
             raise ValueError('Must specify BIGSTICK path by bs=/bs/path')
-        commands = f'cd examples/{self.nucl_symbol};'
+        commands += f'cd examples/{self.nucl_symbol};'
         commands += f'{bs} < create_wfn.in &&'
         if quiet == True:
             commands += f'rm *.bigstick fort.* {self.nucl_symbol}.lcoef;\n'
@@ -230,6 +231,7 @@ class Nucleus:
     def check(self):
         filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.wfn'
         return os.path.exists(filepath)
+
 
 if __name__ == "__main__":
     nu = Nucleus('fe57')

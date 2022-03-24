@@ -8,4 +8,4 @@ usdb                 ! interaction file name (pkuo.int)
 1 18 19 0.3          ! scaling
 end                  ! end of reading in Hamiltonian files
 ld                   ! diagonalization algorithm
-6 400                ! number of state, max Lanczos iteration
+3 100                ! number of state, max Lanczos iteration

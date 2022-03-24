@@ -1,7 +1,7 @@
   = = = = = = BIGSTICK run log file = = = = = = 
   Code and run information 
   BIGSTICK Version 7.9.12 Mar 2021
-  Run date: 2022-03-21
+  Run date: 2022-03-23
   Menu choice: d  
 
  Running on NERSC_HOST: none
@@ -55,32 +55,32 @@
   No one-body potential beyond single-particle energies 
   Time to compute jumps :    0.0000000000000000     
 
-          80  iterations 
-  Average time per processor is    1.6000000061467290E-002  max    1.6000000061467290E-002
-  Time to run after lanczos:    2.4999999906867743E-002
-  Time to run after lanczos:    2.6000000070780516E-002
-  Total time to run :    2.7999999932944775E-002
+          60  iterations 
+  Average time per processor is    1.1999999871477485E-002  max    1.1999999871477485E-002
+  Time to run after lanczos:    1.9000000087544322E-002
+  Time to run after lanczos:    2.0000000018626451E-002
+  Total time to run :    2.0000000018626451E-002
   Time to compute basis :    0.0000000000000000     
   Time to count up jumps :    0.0000000000000000     
   Time to create descendents :    0.0000000000000000     
   Time to setup for matrix elements :    0.0000000000000000     
-  Time to decouple matrix elements :    1.0000001639127731E-003
+  Time to decouple matrix elements :    9.9999993108212948E-004
   Time to compute jumps :    0.0000000000000000     
   Time to sort 1b-jumps :    0.0000000000000000     
   Time to set up pivot :    0.0000000000000000     
-  Time to compute lanczos :    2.0000000018626451E-002
-  Time total in H mat-vec multiply  :    1.6000000061467290E-002
+  Time to compute lanczos :    1.4999999897554517E-002
+  Time total in H mat-vec multiply  :    1.1999999871477485E-002
   Time to apply sp energies :    0.0000000000000000     
-  Time in pn :    5.0000005867332220E-003
-  Time in pn(back) :    5.9999995864927769E-003
+  Time in pn :    3.0000000260770321E-003
+  Time in pn(back) :    4.9999998882412910E-003
   Time in 2-body (pp) :    0.0000000000000000     
-  Time in 2-body (nn) :    3.9999999571591616E-003
-  Time in reorthogonalization :    9.9999993108212948E-004
+  Time in 2-body (nn) :    9.9999993108212948E-004
+  Time in reorthogonalization :    0.0000000000000000     
   Time in reduce (in applyh only) :    0.0000000000000000     
-  Time spent diagonalizing. :    2.0000000949949026E-003
+  Time spent diagonalizing. :    9.9999993108212948E-004
   Time to build eigenvectors. :    0.0000000000000000     
   Time to compute J^2, T^2 :    0.0000000000000000     
-  Time to compute 1b densities:    1.0000001639127731E-003
-  Time to write 1b densities :    9.9999993108212948E-004
+  Time to compute 1b densities:    9.9999993108212948E-004
+  Time to write 1b densities :    0.0000000000000000     
   
   *** END OF LOG *** END OF LOG *** END OF LOG *** 

@@ -20,6 +20,8 @@ hide_table_row_index = """
             </style>
             """
 
+light_nuclei = ['F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl']
+
 with header_container:
     st.title('pyBigstick')
     st.markdown("""This streamlit app visualizes the nuclear transitions calculated by [pyBigstick](https://github.com/noctildon/pyBigstick),
@@ -27,17 +29,24 @@ with header_container:
 
 
 with bs_conatiner:
-    st.text_input("The nucleus to calculate, eg. F19, be10, Ge70 (case-insensitive).\
-        Not all of the nucleus is possible to calculate.",
-        key="nucl_name", value='f19')
-    nucl_name = st.session_state.nucl_name
+    st.markdown("""Input the info of the interested nucleus, eg. F19, Be10.
+        Not sure which nucleus to pick? check out [this](https://periodictable.com/Isotopes/009.19/index.html).
+        Not all of the nucleus is possible to calculate.""")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        n_states = st.selectbox('Number of states to calculate (more states always needs more time)', range(1,7), index=2)
-    with col2:
-        maxiter = st.selectbox('Number of iteration (higher iteration is more accurate on results, but takes longer)', np.arange(50,500,10), index=5)
+    col1_1, col1_2 = st.columns(2)
+    with col1_1:
+        s1 = st.selectbox('The nucleus to calculate', light_nuclei, index=0)
+    with col1_2:
+        s2 = st.selectbox('Mass number', range(9,41), index=10)
 
+    col2_1, col2_2 = st.columns(2)
+    with col2_1:
+        n_states = st.selectbox('Number of states to calculate (more states always need more time)', range(1,7), index=2)
+    with col2_2:
+        maxiter = st.selectbox('Number of iteration (higher iteration is more accurate on results, but takes longer)', np.arange(50,510,10), index=5)
+
+    s1 = s1.lower()
+    nucl_name = f'{s1}{s2}'
     st.text(f'Calculate {nucl_name}...')
     nu = Nucleus(nucl_name, n_states=n_states, maxiter=maxiter)
 
