@@ -232,6 +232,9 @@ class Nucleus:
         filepath = f'examples/{self.nucl_symbol}/{self.nucl_symbol}.wfn'
         return os.path.exists(filepath)
 
+    def clean(self):
+        commands = f'rm -rf examples/{self.nucl_symbol}'
+        os.system(commands)
 
 if __name__ == "__main__":
     nu = Nucleus('fe57')

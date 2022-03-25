@@ -50,6 +50,10 @@ with bs_conatiner:
     st.text(f'Calculate {nucl_name}...')
     nu = Nucleus(nucl_name, n_states=n_states, maxiter=maxiter)
 
+    if st.button('Clean the previous result and rerun'):
+        st.write(f'Successfully clean nucleus {nucl_name}. Running {nucl_name} again...')
+        nu.clean()
+
     if not nu.check():
         nu.script_save()
         nu.prepare()
