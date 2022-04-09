@@ -9,6 +9,10 @@ Note that [BIGSTICK](https://github.com/cwjsdsu/BigstickPublick) only supports u
 ![project-demo](./assets/project-demo.gif)
 
 # Todos
+- [ ] use docker pack BIGSTICK fortran code
+- [ ] Write test
+- [ ] Write documentation
+- [ ] Setup database
 - [ ] Deploy the streamlit app
 - [x] Write some intros
 - [x] Add gif demo
