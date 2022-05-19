@@ -3,7 +3,7 @@ from pyBigstick.nucleus import Nucleus
 
 # This is BIGSTICK path
 # Download BIGSTICK source code and compile it
-bs = '/home/wei-chih/Desktop/Research/BigstickPublick/v7.9.12/bigstick.x'
+bs = '/bigstick/src/bigstick.x'
 
 
 # Create nucleus, here f is fluorine (case insensitive), 19 is the mass number

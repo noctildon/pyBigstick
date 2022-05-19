@@ -14,8 +14,7 @@ deexcitation_image = Image.open('assets/deexcitation.png')
 lvl_image = Image.open('assets/Energy_levels.png')
 shells_image = Image.open('assets/shells.png')
 
-
-bs = '/home/wei-chih/Desktop/Research/BigstickPublick/v7.9.12/bigstick.x'
+bs = '/bigstick/src/bigstick.x'
 
 header_container = st.container()
 intro_container = st.container()
