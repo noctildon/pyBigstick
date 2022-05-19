@@ -1,9 +1,9 @@
-# import the library
+import os
 from pyBigstick.nucleus import Nucleus
 
 # This is BIGSTICK path
-# Download BIGSTICK source code and compile it
-bs = '/bigstick/src/bigstick.x'
+# Copy BIGSTICK source code and compile it
+bs = os.getcwd() +'/src/bigstick.x'
 
 
 # Create nucleus, here f is fluorine (case insensitive), 19 is the mass number

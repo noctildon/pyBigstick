@@ -1,3 +1,4 @@
+import os
 from pyBigstick.nucleus import Nucleus
 import streamlit as st
 import numpy as np
@@ -14,7 +15,8 @@ deexcitation_image = Image.open('assets/deexcitation.png')
 lvl_image = Image.open('assets/Energy_levels.png')
 shells_image = Image.open('assets/shells.png')
 
-bs = '/bigstick/src/bigstick.x'
+bs = os.getcwd() +'/src/bigstick.x'
+
 
 header_container = st.container()
 intro_container = st.container()
