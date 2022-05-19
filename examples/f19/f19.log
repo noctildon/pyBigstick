@@ -1,7 +1,7 @@
   = = = = = = BIGSTICK run log file = = = = = = 
   Code and run information 
   BIGSTICK Version 7.9.12 Mar 2021
-  Run date: 2022-03-25
+  Run date: 2022-05-18
   Menu choice: d  
 
  Running on NERSC_HOST: none
@@ -30,7 +30,7 @@
    2 max # 2-body jumps in a sector jump             105 =>     0.000 Gb storage
    1 max # 1-body jumps in a sector jump               9 =>     0.000 Gb storage
    2 max # 1-body jumps in a sector jump              72 =>     0.000 Gb storage
-  Time to compute jumps :    0.0000000000000000     
+  Time to compute jumps :    9.9999993108212948E-004
   avg storage per operation available    4472887.5265620695       bytes
   avg storage per weighted operation avail:    591253.10668025038       bytes/ns
  opfragstat(           1 ,            1 )%nnodes =            1
@@ -53,34 +53,34 @@
           63  two-body matrix elements in this file 
   As a check, first two-body matrix element in list is   -1.37960005    
   No one-body potential beyond single-particle energies 
-  Time to compute jumps :    0.0000000000000000     
+  Time to compute jumps :    1.0000001639127731E-003
 
           80  iterations 
-  Average time per processor is    1.5999999828636646E-002  max    1.5999999828636646E-002
+  Average time per processor is    1.4999999664723873E-002  max    1.4999999664723873E-002
+  Time to run after lanczos:    2.4999999906867743E-002
   Time to run after lanczos:    2.6000000070780516E-002
-  Time to run after lanczos:    2.6999999769032001E-002
-  Total time to run :    2.7999999932944775E-002
+  Total time to run :    2.7000000001862645E-002
   Time to compute basis :    0.0000000000000000     
-  Time to count up jumps :    0.0000000000000000     
+  Time to count up jumps :    9.9999993108212948E-004
   Time to create descendents :    0.0000000000000000     
   Time to setup for matrix elements :    0.0000000000000000     
-  Time to decouple matrix elements :    1.0000001639127731E-003
-  Time to compute jumps :    0.0000000000000000     
+  Time to decouple matrix elements :    0.0000000000000000     
+  Time to compute jumps :    1.0000001639127731E-003
   Time to sort 1b-jumps :    0.0000000000000000     
   Time to set up pivot :    0.0000000000000000     
-  Time to compute lanczos :    2.0999999716877937E-002
+  Time to compute lanczos :    2.0000000018626451E-002
   Time total in H mat-vec multiply  :    1.5999999828636646E-002
   Time to apply sp energies :    0.0000000000000000     
-  Time in pn :    6.0000005178153515E-003
-  Time in pn(back) :    3.0000000260770321E-003
+  Time in pn :    3.9999997243285179E-003
+  Time in pn(back) :    4.0000001899898052E-003
   Time in 2-body (pp) :    0.0000000000000000     
-  Time in 2-body (nn) :    3.9999997243285179E-003
-  Time in reorthogonalization :    1.0000001639127731E-003
+  Time in 2-body (nn) :    3.9999999571591616E-003
+  Time in reorthogonalization :    2.0000000949949026E-003
   Time in reduce (in applyh only) :    0.0000000000000000     
-  Time spent diagonalizing. :    2.9999995604157448E-003
-  Time to build eigenvectors. :    0.0000000000000000     
+  Time spent diagonalizing. :    2.0000000949949026E-003
+  Time to build eigenvectors. :    9.9999993108212948E-004
   Time to compute J^2, T^2 :    0.0000000000000000     
-  Time to compute 1b densities:    9.9999969825148582E-004
-  Time to write 1b densities :    1.0000001639127731E-003
+  Time to compute 1b densities:    1.0000001639127731E-003
+  Time to write 1b densities :    9.9999993108212948E-004
   
   *** END OF LOG *** END OF LOG *** END OF LOG *** 

@@ -1,0 +1,13 @@
+.git
+.gitignore
+__pycache__/
+*/__pycache__/
+src/
+
+*.pdf
+LICENSE
+README.md
+Dockerfile
+.dockerignore
+
+myNote.txt

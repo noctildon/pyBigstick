@@ -1,16 +1,20 @@
-FROM ubuntu:18.04
-# maybe try alpine. ubuntu is a bit heavy
+FROM ubuntu:20.04
 
-COPY src_bigstick /src_bigstick
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=US/Central
 
-WORKDIR /src_bigstick
+COPY . /bigstick
+COPY clean_src /bigstick/src
+
+WORKDIR /bigstick/src
 
 # Install dependencies
 RUN apt-get update
-RUN apt-get install -y make gfortran
+RUN apt-get install -y make cmake gfortran nano python3 python3-pip
 RUN apt-get clean -q
+RUN pip3 install plotly streamlit
 
 
 # build and compile bigstick
 RUN make gfortran
-# RUN ls | grep bigstick
+WORKDIR /bigstick
