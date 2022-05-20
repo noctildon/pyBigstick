@@ -56,14 +56,14 @@ class Nucleus:
         self.int = self.__get_interaction()
         self.scaling = f'{1} {2*self.__get_core_orbit_capcity()+2} {self.A} {0.3}'
 
-        self.n_states = n_states # number of states,
-        self.diag = diag # diagonalize algo
-        self.maxiter = maxiter #max iteration
-        self.fragsize = fragsize # for parallel job only, -1 means no parallel
+        self.n_states = n_states  # number of states,
+        self.diag = diag          # diagonalize algo
+        self.maxiter = maxiter    # max iteration
+        self.fragsize = fragsize  # for parallel job only, -1 means no parallel
 
         # results
-        self.states = [] # energy level states: staten, E, Ex, J, T
-        self.densities = [] # density matrices: statei, statej, orba, orbb, Jt, Tt, value
+        self.states = []     # energy level states: staten, E, Ex, J, T
+        self.densities = []  # density matrices: statei, statej, orba, orbb, Jt, Tt, value
 
 
     # n is nucleon
@@ -235,6 +235,7 @@ class Nucleus:
     def clean(self):
         commands = f'rm -rf examples/{self.nucl_symbol}'
         os.system(commands)
+
 
 if __name__ == "__main__":
     nu = Nucleus('fe57')

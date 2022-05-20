@@ -40,13 +40,16 @@ Non unix-like system can use docker to visualize pyBigstick
 2. Build or download the pybigstick image
 
 ```sh
-# Takes ~ 5min
+# Build an image by the dockerfile, taking ~ 5min
 $ docker build -t pybigstick .
+
+# Download the prebuilt image (https://hub.docker.com/r/noctildon/pybigstick)
+$ docker pull noctildon/pybigstick
 ```
 
 3. Launch the Streamlit app
 ```sh
-$ docker container run pybigstick streamlit run show.py
+$ docker container run noctildon/pybigstick streamlit run show.py
 ```
 4. Open Network URL in the browser
 
@@ -55,13 +58,16 @@ $ docker container run pybigstick streamlit run show.py
 
 To get full control of pybigstick, enter the pybigstick container with bash
 ```sh
-$ docker container run -it pybigstick bash
+$ docker container run -it noctildon/pybigstick bash
 ```
 
 
 # Demo
 ![project-demo](./assets/project-demo.gif)
 
+
+
+<a title="Documents" href="https://github.com/noctildon/pyBigstick/blob/master/docs/nucleus.md" target="_blank">Documents</a>
 
 # Todos
 - [ ] Find a lighter image
