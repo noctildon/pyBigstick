@@ -1,7 +1,7 @@
 # pyBigstick
 
 ## Introduction
-A python script that generates the input for [BIGSTICK](https://github.com/cwjsdsu/BigstickPublick), which uses shell model (theory & algorithm) and fortran (implementation) to calculate the nuclear structure.
+A python script that generates the input for [BIGSTICK](https://github.com/cwjsdsu/BigstickPublick) (Calvin, et al), which uses shell model (theory & algorithm) and fortran (implementation) to calculate the nuclear structure.
 
 See main.py for the example code, and show.py for data visualization (using streamlit).
 Note that [BIGSTICK](https://github.com/cwjsdsu/BigstickPublick) only supports unix-like system, so does pyBigstick.
@@ -67,10 +67,11 @@ $ docker container run -it noctildon/pybigstick bash
 
 
 
-<a title="Documents" href="https://github.com/noctildon/pyBigstick/blob/master/docs/nucleus.md" target="_blank">Documents</a>
+<a title="Documents" href="https://github.com/noctildon/pyBigstick/blob/master/docs/content.md" target="_blank">Documents</a>
+
 
 # Todos
 - [ ] Find a lighter image
-- [ ] Write documentation
 - [ ] Deploy the whole app
+- [x] Write documentation
 - [x] use docker pack BIGSTICK fortran code along with streamlit
