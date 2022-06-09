@@ -30,9 +30,9 @@ class Nucleus:
             proton = int(nucl['atomicNumber'])
             neutron = int(mass_number) - proton
             if neutron < 0:
-                raise ValueError('Nucleus does not exist')
+                raise ValueError('Nucleus does not exist. Neutron number cannot be negative')
         except:
-            raise ValueError('Nucleus does not exist')
+            raise ValueError('Nucleus does not exist. Check the symbol.')
 
         self.symbol = symbol
         self.nucl_symbol = nucl_symbol
@@ -45,7 +45,7 @@ class Nucleus:
         self.p_orbit = self.__get_orbit(proton)
         self.n_orbit = self.__get_orbit(neutron)
         if self.p_orbit != self.n_orbit:
-            raise ValueError("Protons and neutrons are in different orbit. Handle them manually.")
+            raise ValueError(f"Protons ({self.p_orbit}) and neutrons ({self.n_orbit}) are in different orbits. Handle them manually.")
         else:
             self.orbit = self.p_orbit
 
@@ -94,22 +94,29 @@ class Nucleus:
         if 50 < n <= 82:
             return 'jj55'
         else:
-            raise ValueError('Too many nucleons')
+            raise ValueError('Too many nucleons (>82)')
 
     def __get_core_orbit_capcity(self):
         return df_orbits.loc[df_orbits.name == self.orbit, 'core_size'].values[0]
 
     def __get_interaction(self):
         if self.orbit == 's':
+            raise ValueError('Interaction not found for s orbits')
+        try:
+            return df_orbits.loc[df_orbits.name == self.orbit, 'int'].values[0]
+        except:
             raise ValueError('Interaction not found')
-        return df_orbits.loc[df_orbits.name == self.orbit, 'int'].values[0]
 
     # generate the script
     def script_gen(self):
         option, end, parity = 'd', 'end', '0'
         output = f'{option:20} {option_comment}'
         output += f'{self.nucl_symbol:20} {name_comment}'
-        output += f'{self.orbit:20} {sps_comment}'
+        if self.orbit == 'jj55':
+            jj55_orbit = 'jj55pn'
+            output += f'{jj55_orbit:20} {sps_comment}'
+        else:
+            output += f'{self.orbit:20} {sps_comment}'
         output += f'{str(self.p_valence)} {str(self.n_valence):18} {valence_comment}'
         output += f'{str(self.jz):20} {jz2_comment}'
         output += f'{parity:20} {parity_comment}'

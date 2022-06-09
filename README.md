@@ -71,7 +71,7 @@ $ docker container run -it noctildon/pybigstick bash
 
 
 # Todos
-- [ ] Find a lighter image
+- [ ] Find a lighter image (need suggestion)
 - [ ] Deploy the whole app
 - [x] Write documentation
 - [x] use docker pack BIGSTICK fortran code along with streamlit
