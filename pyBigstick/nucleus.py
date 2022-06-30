@@ -14,7 +14,7 @@ valence_comment = '! # of valence protons, neutrons\n'
 jz2_comment = '! 2 * jz\n'
 parity_comment = '! both parities wanted\n'
 fragsize_comment = '! limit on fragment size for breaking Lanczos vectors\n'
-hamil_comment = '! interaction file name (pkuo.int)\n'
+hamil_comment = '! interaction file name (*.int)\n'
 scaling_comment = '! scaling\n'
 end_comment = '! end of reading in Hamiltonian files\n'
 diag_comment = '! diagonalization algorithm\n'
@@ -44,10 +44,12 @@ class Nucleus:
         # proton and neutron must be in the same orbit
         self.p_orbit = self.__get_orbit(proton)
         self.n_orbit = self.__get_orbit(neutron)
-        if self.p_orbit != self.n_orbit:
-            raise ValueError(f"Protons ({self.p_orbit}) and neutrons ({self.n_orbit}) are in different orbits. Handle them manually.")
+
+        pn_orbit = self.p_orbit & self.n_orbit
+        if pn_orbit:
+            self.orbit = list(pn_orbit)[0]
         else:
-            self.orbit = self.p_orbit
+            raise ValueError(f"Protons ({self.p_orbit}) and neutrons ({self.n_orbit}) are in different orbits. Handle them manually.")
 
         self.jz = 0 if self.A %2 == 0 else 1
         self.p_valence = self.__get_valence()[0]
@@ -82,19 +84,26 @@ class Nucleus:
 
         return p_valence, n_valence
 
+
     def __get_orbit(self, n):
+        possible_orbits = []
         if n <= 2:
-            return 's'
-        if 2 < n <= 8:
-            return '0p'
-        if 8 < n <= 20:
-            return 'sd'
-        if 20 < n <= 40:
-            return 'pf'
-        if 50 < n <= 82:
-            return 'jj55'
+            possible_orbits.append('s')
+        elif 2 < n <= 8:
+            possible_orbits.append('0p')
+        elif 8 < n <= 20:
+            possible_orbits.append('sd')
+        elif 20 < n <= 50:
+            if 20 < n <= 40:
+                possible_orbits.append('pf')
+            if 28 < n <= 50:
+                possible_orbits.append('pfg')
+        elif 50 < n <= 82:
+            possible_orbits.append('jj55')
         else:
             raise ValueError('Too many nucleons (>82)')
+
+        return set(possible_orbits)
 
     def __get_core_orbit_capcity(self):
         return df_orbits.loc[df_orbits.name == self.orbit, 'core_size'].values[0]

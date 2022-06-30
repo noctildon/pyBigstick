@@ -71,6 +71,7 @@ $ docker container run -it noctildon/pybigstick bash
 
 
 # Todos
+- [ ] Provide different options of interaction files
 - [ ] Find a lighter image (need suggestion)
 - [ ] Deploy the whole app
 - [x] Write documentation
