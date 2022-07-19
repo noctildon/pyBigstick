@@ -1,0 +1,4 @@
+o             ! Apply a one-body operator to a previous wfn
+na23          ! previous wfn
+na23_o        ! output name
+sdgt0         ! opme file

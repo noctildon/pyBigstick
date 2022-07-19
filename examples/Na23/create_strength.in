@@ -1,0 +1,8 @@
+s                ! Compute strength function distribution
+na23_o           ! previous wfn
+na23_s           ! output name
+usdb             ! interaction file
+1 18 23 0.3      ! scaling
+end
+32 500           ! number of states, iterations
+1                ! pivot state
