@@ -7,10 +7,11 @@ bs = os.getcwd() +'/src/bigstick.x'
 
 
 # Create nucleus, here f is fluorine (case insensitive), 19 is the mass number
-nu = Nucleus('f19')
+nu = Nucleus('si28')
 
 
 # Running BIGSTICK
+print(nu.script_gen()) # print BIGSTICK script
 nu.script_save() # generate BIGSTICK script and save in examples/
 nu.prepare() # copy the inputs
 nu.run(bs=bs) # run the script
